@@ -72,6 +72,33 @@ int main(int argc,char *argv[])
        fputs((const char*)signature,signf32);
 
      cout<<endl<<signature<<endl; 
+      char pubkey[] = {
+        "-----BEGIN PUBLIC KEY-----\n"
+        "MIHwMIGoBgcqhkjOOAQBMIGcAkEA3F41fxvcwGZeFxXg2v0/5SR+cxTizT25Qugw\n"
+        "ZgrC7u2zQYTO1Qu0PPDKUrLxkaLzKsUEJbQ1DImnG/FxtRjH7QIVAOp+o1qPhOI4\n"
+        "DtnvYS86ynTxhDcFAkAyKbiUxJigARuuVVlGn4emXOtrT+Al+gmKbbVFfkS62RhS\n"
+        "ZexQ9+mBLv0/1R8Tk37AwuybnflijiPjLxB1ZL00A0MAAkA2DXjw+0PJOyrQfn2Q\n"
+        "44uHyZMG2WfXqT7CIz26ZiIAHDOkZQhOvPLqCKAXfwHgGrgl2JLovhVY8nPMdNk2\n"
+        "vJij\n"
+        "-----END PUBLIC KEY-----"
+        };
+
+    BIO *pub_bio;
+    pub_bio = BIO_new_mem_buf(pubkey, -1); 
+    if(pub_bio == NULL){ERR_print_errors_fp(stdout);return 4;} 
+
+    DSA *public_key;
+    public_key = PEM_read_bio_DSA_PUBKEY(pub_bio, NULL, NULL, NULL);
+    if(public_key == NULL){ERR_print_errors_fp(stdout);return 5;} 
+
+    result = DSA_verify(NULL, (const unsigned char*)message, strlen(message),
+                        signature, sign_length, public_key);
+
+    if(result>0){
+        printf("Verification OK\n");
+    }else{
+        printf("Verification Failure. Error = %i\n",result);
+    }
 	printf("hello\n");
 	getchar();
   return 0;
