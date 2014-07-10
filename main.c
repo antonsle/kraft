@@ -19,8 +19,44 @@ int spc_DSA_sign(unsigned char *msg, int msglen, unsigned char *sig, DSA *dsa)
   
   return DSA_sign(NID_sha1, hash, 20, sig, &ignored, dsa);  
 }
-int main()
+int main(int argc,char *argv[])
 {
+	 /*sign -in data.txt -cert cert.pfx -out sign.bin*/
+     char *buff2;
+     buff2=(char*)malloc(8);
+     buff2=argv[3];
+     
+     char *buff3;
+     buff3=(char*)malloc(8);
+     buff3=argv[5];
+      
+     char *buff4;
+     buff4=(char*)malloc(8);
+     buff4=argv[7];
+	
+	char *pbkey;
+	pbkey=(char*)malloc(381);
+	char *prkey;
+	prkey=(char*)malloc(403);
+	
+
+	FILE *msgf = fopen (buff2,"r+");
+	char message[256*1000];
+	char *newline;
+	
+      while(1)
+	{
+      if(fgets(message, 256*1000, msgf) == NULL)
+      
+      if((newline = strchr(message, '\n')) != NULL)
+      *newline = '\0';
+      if(message[i]=='\0')
+	break;
+	}
+	   FILE *prkeyf = fopen (buff3,"r");
+      fread(prkey, 403, 1, prkeyf);
+   
+     
 	printf("hello\n");
 	getchar();
   return 0;
