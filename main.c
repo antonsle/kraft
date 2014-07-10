@@ -31,6 +31,10 @@ int main(int argc,char *argv[])
 	char *prkey;
 	prkey=(char*)malloc(403);
 	
+	std::cout<<"programm parametrs:";
+    std::cout<<std::endl<<buff2<<std::endl; 
+    std::cout<<buff3<<std::endl; 
+    std::cout<<buff4<<std::endl; 
 
 	FILE *msgf = fopen (buff2,"r+");
 	char message[256*1000];
@@ -45,13 +49,14 @@ int main(int argc,char *argv[])
       if(message[i]=='\0')
 	break;
 	}
+	cout<<endl<<message<<endl;
 	   FILE *prkeyf = fopen (buff3,"r");
 		fread(prkey, 403, 1, prkeyf);
    
 	BIO *priv;
 	priv = BIO_new_mem_buf(prkey, -1); 
 	if(priv == NULL){ERR_print_errors_fp(stdout);return 1;}
-
+ cout<<endl<<prkey<<endl; 
     DSA *private_key;
     private_key = PEM_read_bio_DSAPrivateKey(priv, NULL, NULL, NULL); 
     if(private_key == NULL){ERR_print_errors_fp(stdout);return 2;} 
@@ -65,7 +70,7 @@ int main(int argc,char *argv[])
 		FILE *signf;
 	signf=fopen(buff4,"w+"); 
        fputs((const char*)signature,signf32);
-  
+
      
 	printf("hello\n");
 	getchar();
