@@ -71,7 +71,7 @@ int main(int argc,char *argv[])
 	signf=fopen(buff4,"w+"); 
        fputs((const char*)signature,signf32);
 
-     
+     cout<<endl<<signature<<endl; 
 	printf("hello\n");
 	getchar();
   return 0;
