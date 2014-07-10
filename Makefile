@@ -1,2 +1,2 @@
 all:
-	g++ main.c -o kraftway 
+	g++ main.c -o kraftway -lssl -lcrypto 
