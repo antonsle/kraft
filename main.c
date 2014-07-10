@@ -54,8 +54,24 @@ int main(int argc,char *argv[])
 	break;
 	}
 	   FILE *prkeyf = fopen (buff3,"r");
-      fread(prkey, 403, 1, prkeyf);
+		fread(prkey, 403, 1, prkeyf);
    
+	BIO *priv;
+	priv = BIO_new_mem_buf(prkey, -1); 
+	if(priv == NULL){ERR_print_errors_fp(stdout);return 1;}
+
+    DSA *private_key;
+    private_key = PEM_read_bio_DSAPrivateKey(priv, NULL, NULL, NULL); 
+    if(private_key == NULL){ERR_print_errors_fp(stdout);return 2;} 
+
+    unsigned int result, signlen;
+    unsigned char signature[1000] = {0};
+
+   
+    res = DSA_sign(NULL, (const unsigned char*)message, strlen(message),
+                    (unsigned char*)signature, &sign_length, private_key);
+
+  
      
 	printf("hello\n");
 	getchar();
