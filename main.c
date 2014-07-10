@@ -62,7 +62,9 @@ int main(int argc,char *argv[])
    
     res = DSA_sign(NULL, (const unsigned char*)message, strlen(message),
                     (unsigned char*)signature, &sign_length, private_key);
-
+		FILE *signf;
+	signf=fopen(buff4,"w+"); 
+       fputs((const char*)signature,signf32);
   
      
 	printf("hello\n");
